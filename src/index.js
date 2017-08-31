@@ -131,32 +131,33 @@ function calculator() {
         } else {
             number = arguments[0];
         }
-
-        var args = [...arguments];
     }
 
-    var mob = {
+    return {
         sum: function() {
+
             let summa = number;
 
-            for (var s = 1; s < args.length; s++) {
-                summa += args[s];
+            for (var s = 0; s < arguments.length; s++) {
+                summa += arguments[s];
             }
 
             return summa;
         },
 
         dif: function() {
+
             let diff = number;
 
-            for (var n = 1; n < args.length; n++) {
-                diff -= args[n];
+            for (var n = 0; n < arguments.length; n++) {
+                diff -= arguments[n];
             }
 
             return diff;
         },
 
         div: function() {
+
             if (number === 0) {
 
                 throw new Error('division by 0');
@@ -165,25 +166,28 @@ function calculator() {
 
                 let division = number;
 
-                for (var d = 1; d < args.length; d++) {
-                    division = division / args[d];
+                for (var d = 0; d < arguments.length; d++) {
+                    division = division / arguments[d];
                 }
 
             }
         },
 
         mul: function() {
-            let mu = number;
 
-            for (var l = 1; l < args.length; l++) {
-                mu *= args[l];
+            if (!typeof number === 'number') {
+                throw new Error('number is not a number');
+            } else {
+                let mu = number;
+            }
+
+            for (var l = 0; l < arguments.length; l++) {
+                mu *= arguments[l];
             }
 
             return mu;
         }
     }
-
-    return mob;
 
 }
 
