@@ -123,15 +123,13 @@ function returnBadArguments(fn) {
  - какой-либо из аргументов div является нулем (с текстом "division by 0")
  */
 function calculator() {
-    var number = 0;
-
-    if (arguments.length > 0) {
-        if (!typeof arguments[0] === 'number') {
+        var number = 0;
+        
+        if (typeof arguments[0] === 'number') {
+            var number = arguments[0];
+        } else if (arguments[0] !== undefined) {
             throw new Error('number is not a number');
-        } else {
-            number = arguments[0];
         }
-    }
 
     return {
         sum: function() {
@@ -158,13 +156,13 @@ function calculator() {
 
         div: function() {
 
-            if (number === 0) {
+            let division = number;
+
+            if (division === 0) {
 
                 throw new Error('division by 0');
 
             } else {
-
-                let division = number;
 
                 for (var d = 0; d < arguments.length; d++) {
                     division = division / arguments[d];
@@ -175,11 +173,7 @@ function calculator() {
 
         mul: function() {
 
-            if (!typeof number === 'number') {
-                throw new Error('number is not a number');
-            } else {
-                let mu = number;
-            }
+            let mu = number;
 
             for (var l = 0; l < arguments.length; l++) {
                 mu *= arguments[l];
