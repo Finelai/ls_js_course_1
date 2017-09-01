@@ -158,17 +158,18 @@ function calculator() {
 
             let division = number;
 
-            if (division === 0) {
+            for (var d = 0; d < arguments.length; d++) {
 
-                throw new Error('division by 0');
-
-            } else {
-
-                for (var d = 0; d < arguments.length; d++) {
+                if ( division == 0 || arguments[d] == 0 ) {
+                    throw new Error('division by 0');
+                } else {
                     division = division / arguments[d];
                 }
 
             }
+
+            return division;
+
         },
 
         mul: function() {
