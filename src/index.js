@@ -18,7 +18,7 @@ function map(array, fn) {
     let newArr = [];
 
     for (var i = 0; i < array.length; i++) {
-        let newP = fn(array[i], array.indexOf(array[i]), array);
+        let newP = fn(array[i], i, array);
         newArr.push(newP);
     }
 
@@ -32,18 +32,19 @@ function map(array, fn) {
 function reduce(array, fn, initial) {
     var prev, ini;
 
-    if (initial !== undefined) {
-        prev = array[initial];
-        ini = initial;
+    if (initial) {
+        prev = initial;
+        ini = 0;
     } else {
         prev = array[0];
-        ini = 0;
+        ini = 1;
     }
 
     for (var i = ini; i < array.length; i++) {
-        fn(prev, array[i], array.indexOf(array[i]), array);
-        prev = array[i];
+        fn(prev, array[i], i, array);
     }
+
+    return prev;
 }
 
 /*
