@@ -1,3 +1,4 @@
+
 /* ДЗ 5 - DOM Events */
 
 /**
@@ -48,7 +49,6 @@ function emulateClick(target) {
     });
 
     target.dispatchEvent(myEvent);
-
 }
 
 /**
