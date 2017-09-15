@@ -31,23 +31,27 @@ function loadAndSortTowns() {
         xhr.responseType = 'json';
         xhr.send();
 
-        if ( xhr.status < 400 ) {
+        xhr.addEventListener('load', () => {
 
-            let resArray = xhr.response;
-            
-            resArray.sort(function(a, b) {
-                if (a.name < b.name) return -1;
-                if (a.name > b.name) return 1;
-                return 0;
-            });
+            if ( xhr.status < 400 ) {
 
-            resolve(resArray);
+                let resArray = xhr.response;
+                
+                resArray.sort(function(a, b) {
+                    if (a.name < b.name) return -1;
+                    if (a.name > b.name) return 1;
+                    return 0;
+                });
 
-        } else {
+                resolve(resArray);
 
-            reject();
+            } else {
 
-        }
+                reject();
+
+            }
+
+        });
 
     });
 }
