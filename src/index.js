@@ -37,7 +37,7 @@ function createCookie(name, value) {
  * @param name - имя
  */
 function deleteCookie(name) {
-    document.cookie = `${name}='';expires=-1`;
+    document.cookie = `${name}=;expires=${new Date(0)}`;
 }
 
 export {
