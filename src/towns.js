@@ -118,6 +118,13 @@ var getTowns = loadTowns().then(function(cities) {
 });
 
 var getCities = function () {
+
+    for (var i = 0; i < filterResult.childNodes.length; i++) {
+        if ( filterResult.childNodes[i].tagName == 'LI' ) {
+            filterResult.removeChild(filterResult.childNodes[i]);
+        }
+    }
+
     let curVal = filterInput.value;
 
         if (curVal !== undefined && curVal !== null) {
