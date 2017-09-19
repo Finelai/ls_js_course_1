@@ -29,22 +29,6 @@
  */
 let homeworkContainer = document.querySelector('#homework-container');
 
-let loadblock = document.createElement('div');
-loadblock.id = '#loading-block';
-homeworkContainer.appendChild(loadblock);
-
-let filterblock = document.createElement('div');
-filterblock.id = '#filter-block';
-homeworkContainer.appendChild(filterblock);
-
-let filterinput = document.createElement('input');
-filterinput.id = '#filter-input';
-homeworkContainer.appendChild(filterinput);
-
-let filterresult = document.createElement('div');
-filterresult.id = '#filter-result';
-homeworkContainer.appendChild(filterresult);
-
 /**
  * Функция должна загружать список городов из https://raw.githubusercontent.com/smelukov/citiesTest/master/cities.json
  * И возвращать Promise, которой должен разрешиться массивом загруженных городов
@@ -109,47 +93,46 @@ let filterInput = homeworkContainer.querySelector('#filter-input');
 let filterResult = homeworkContainer.querySelector('#filter-result');
 let townsPromise;
 
+loadingBlock.textContent = 'Загрузка...';
+
+var getTowns = loadTowns().then(function(cities) {
+
+    loadingBlock.textContent = '';
+
+    townsPromise = cities;
+
+}).catch(function() {
+
+    var warn = document.createElement('p');
+
+    warn.textContent = 'Не удалось загрузить города';
+    warn.style.color = 'red';
+    filterBlock.appendChild(warn);
+
+    var repeatButton = document.createElement('button');
+
+    repeatButton.textContent = 'Повторить';
+    repeatButton.addEventListener('click', getTowns);
+    filterBlock.appendChild(repeatButton);
+
+});
+
 var getCities = function () {
     let curVal = filterInput.value;
-    
+
         if (curVal !== undefined && curVal !== null) {
 
-            loadingBlock.textContent = 'Загрузка...';
-    
-            loadTowns()
-                .then(function(cities) {
-    
-                    loadingBlock.textContent = '';
-    
-                    for ( var i = 0; i < cities.length; i++) {
-                        if (isMatching(cities[i], curVal)) {
-                            var el = document.createElement('li');
-    
-                            el.textContent = cities[i];
-                            filterResult.appendChild(el);
-                        }
-                    }
-    
-                })
-                .catch(function() {
+            for ( var i = 0; i < townsPromise.length; i++) {
+                if (isMatching(townsPromise[i].name, curVal)) {
+                    var el = document.createElement('li');
 
-                    var warn = document.createElement('p');
-    
-                    warn.textContent = 'Не удалось загрузить города';
-                    warn.style.color = 'red';
-                    filterBlock.appendChild(warn);
-    
-                    var repeatButton = document.createElement('button');
-                    
-                    repeatButton.textContent = 'Повторить';
-                    repeatButton.addEventListener('click', function() {
-                        getCities(filterInput.value);
-                    });
-                    filterBlock.appendChild(repeatButton);
-
-                });
+                    el.textContent = townsPromise[i].name;
+                    filterResult.appendChild(el);
+                }
+            }
 
         }
+
 }
 
 filterInput.addEventListener('keyup', getCities);
