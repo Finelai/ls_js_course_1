@@ -180,36 +180,106 @@ filtered_filter.addEventListener('keyup', getFil);
 
 // перенос мышью
 
-// resArr.addEventListener('mousedown', function(event) {
+setTimeout(function() {
+    
+    // получаем список всех элементов для переноса и задаем атрибут draggable
+    for(var 
+        items = document.querySelectorAll('[data-draggable="item"]'), 
+        len = items.length, 
+        i = 0; i < len; i ++)
+    {
+        console.log(len);
+        items[i].setAttribute('draggable', 'true');
+    }
 
-//     if (event.target.parentNode.className === 'item') {
-//         var curTar = event.target.parentNode;
-//     } else if (event.target.className === 'item') {
-//         var curTar = event.target;
-//     }
+    var item = null;
 
-//     curTar.ondragstart = function() {
-//       return false;
-//     };
+    // создаем события начала захвата элемента
+    document.addEventListener('dragstart', function(e)
+    {
+        // привязываем элемента к переменной
+        item = e.target;
 
-//     curTar.style.position = 'absolute';
-//     moveAt(event, curTar);
+        e.dataTransfer.setData('text', '');
 
-//     document.onmousemove = function(e) {
-//         moveAt(e, curTar);
-//     }
+    }, false);
 
-//     curTar.onmouseup = function() {
-//         document.onmousemove = null;
-//         curTar.onmouseup = null;
-//     }
+    // отменяем действия для элемента по умолчанию
+    document.addEventListener('dragover', function(e)
+    {
 
-//     function moveAt(e, target) {
-//         target.style.left = e.pageX - target.offsetWidth / 2 + 'px';
-//         target.style.top = e.pageY - target.offsetHeight / 2 + 'px';
-//     }
+        if(item)
+        {
+            e.preventDefault();
+        }
 
-// });
+    }, false);  
+
+    // создаем события на отпускание элемента после перетаскивания
+    document.addEventListener('drop', function(e)
+    {
+        // проверяем был ли элемент отпущен над целевым элементом
+        if(e.target.getAttribute('data-draggable') == 'target')
+        {
+            // привязываем элемент к целевому элементу
+            e.target.appendChild(item);
+
+            let user_name = item.firstElementChild.nextElementSibling.innerHTML.split(' ');
+            console.log(user_name, 'move to', e.target.id);
+
+            // проверяем id целевого элемента
+            if (e.target.id = 'filtered_array') {
+
+                // находим и убираем элемент из объекта curResults
+                for (var i = 0; i < curResults.items.length; i++) {
+                    if (curResults.items[i].first_name == user_name[0]) {
+                        let cutInd = curResults.items.indexOf(curResults.items[i]);
+                        curResults.items.splice(cutInd, 1);
+                    }
+                }
+
+                // добавляем данные пользователя к объекту curFiltered
+               let newItem = {
+                    first_name: user_name[0],
+                    last_name: user_name[1],
+                    photo_100: item.firstElementChild.src
+                };
+                curFiltered.items.push(newItem);
+
+            } else {
+
+                // находим и убираем элемент из объекта curFiltered
+                for (var i = 0; i < curFiltered.items.length; i++) {
+                    if (curFiltered.items[i].first_name == user_name[0]) {
+                        let cutInd = curFiltered.items.indexOf(curFiltered.items[i]);
+                        curFiltered.items.splice(cutInd, 1);
+                    }
+                }
+
+                // добавляем данные пользователя к объекту curResults
+               let newItem = {
+                    first_name: user_name[0],
+                    last_name: user_name[1],
+                    photo_100: item.firstElementChild.src
+                };
+                curResults.items.push(newItem);
+
+            }
+
+            e.preventDefault();
+        }
+    
+    }, false);
+    
+    // событие очистки переменной от перетаскиваемого элемента
+    document.addEventListener('dragend', function(e)
+    {
+
+        item = null;
+
+    }, false);
+
+}, 5000);
 
 
 // сохранение результата в списке
