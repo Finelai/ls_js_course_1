@@ -15,12 +15,12 @@
     <div id="results">
         <input type="text" id="results_filter" placeholder="Введите имя друга">
         <h3 class="list_name" id="headerInfo">Друзья на странице</h3>
-        <div id="results_array"></div>
+        <div id="results_array" data-draggable="target"></div>
     </div>
     <div id="filtered">
         <input type="text" id="filtered_filter" placeholder="Введите имя друга">
         <h3 class="list_name">Новый список друзей</h3>
-        <div id="filtered_array"></div>
+        <div id="filtered_array" data-draggable="target"></div>
     </div>
     <div class="save">
         <button id="save">Сохранить</button>
@@ -29,7 +29,7 @@
 
 <script id="user-template" type="text/x-handlebars-template">
         {{#each list}}
-        <div class="item">
+        <div class="item" data-draggable="item">
             <img src="{{photo_100}}"/>
             <p>{{first_name}} {{last_name}}</p>
             <div class="add"></div>
@@ -39,7 +39,7 @@
 
 <script id="user-template2" type="text/x-handlebars-template">
         {{#each list}}
-        <div class="item">
+        <div class="item" data-draggable="item">
             <img src="{{photo_100}}"/>
             <p>{{first_name}} {{last_name}}</p>
             <div class="remove"></div>
@@ -108,6 +108,9 @@
         margin-bottom: 10px;
         overflow: hidden;
         clear: both;
+        background-color: lightgray;
+        border-radius: 20px;
+        padding: 10px;
     }
     div.item:active,
     div.item:hover {
