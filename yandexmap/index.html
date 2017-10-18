@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Yandex Map</title>
+  <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div id="map"></div>
+
+<div id="addrev">
+  <div class="head">
+    <p id="adress"></p>
+    <div class="close" id="revclose">X</div>
+  </div>
+  <div id="revlist">Отзывов пока нет...</div>
+  <h3>ВАШ ОТЗЫВ:</h3>
+  <input name="name" id="name" type="text" placeholder="Ваше имя">
+  <br>
+  <input name="mesto" id="mesto" type="text" placeholder="Укажите место">
+  <br>
+  <textarea name="revtxt" id="revtxt" cols="30" rows="10" placeholder="Поделитесь впечатлениями"></textarea>
+  <br>
+  <button id="add">Добавить</button>
+  <br>
+  <br>
+  <br>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
